@@ -1,7 +1,10 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import './App.scss'
 
-type AppProps = {
+interface CountProps {
+  count: number;
+}
+interface CountState {
   count: number;
 }
 
@@ -19,19 +22,27 @@ function App() {
   );
 }
 
-function Child1({ count }: AppProps) {
+function Child1({ count }: CountProps) {
   return <div className="child-1">
     <div>Child1</div>
     count: {count}
     <Child2 count={count} />
   </div>
 }
+class Child2 extends React.Component<CountProps, CountState>{
+  constructor(props: CountProps) {
+    super(props);
+    this.state = {
+      count: 0
+    }
+  }
 
-function Child2({ count }: AppProps) {
-  return <div className="child-2">
-    <div>Child1</div>
-    count: {count}
-  </div>
+  render() {
+    return <div className="child-2">
+      <div>Child2</div>
+      count: {this.props.count}
+    </div>
+  }
 }
 
 export default App;
